@@ -1,8 +1,6 @@
 #include <Windows.h>
 #include "classes.h"
 
-VOID ErasePEH(VOID) { for (DWORD offset = 0x1000; offset > 0; offset -= 4) *(DWORD*)((DWORD)ErasePEH - offset) = NULL; }
-
 DWORD WINAPI HackThread(LPVOID param) {
 	
 	ACgame* AC = (ACgame*)((DWORD)::GetModuleHandleA("ac_client.exe") + 0x10F4F4); //0x50F4F4
@@ -29,7 +27,6 @@ DWORD WINAPI HackThread(LPVOID param) {
 DWORD WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpReserved) {
 
 	if (dwReason == DLL_PROCESS_ATTACH) {
-		//ErasePEH();
 		::CreateThread(NULL, NULL, HackThread, NULL, NULL, NULL);
 		::DisableThreadLibraryCalls(hModule);
 	}
